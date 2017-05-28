@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { SortService } from "./sort.service";
+import { SortService } from './sort.service';
 
-enum SortState {
+export enum SortState {
     None = 0,
     Ascending = 1,
     Descending = 2
@@ -24,31 +24,32 @@ enum SortState {
    */
    -ms-user-select: none;
    user-select: none;
-}       
+}
         `
     ]
 })
 export class SortComponent implements OnInit {
-    sortState: SortState;
-    name: string;
+    public sortState: SortState;
+    public name: string;
 
-    constructor(private sortService:SortService, private elementRef:ElementRef) {
+    constructor(private sortService: SortService, private elementRef: ElementRef) {
         this.sortState = SortState.None;
-        this.sortService.onClear$.subscribe((name:string)=>{
-            if (this.name == name)
+        this.sortService.onClear$.subscribe((name: string) => {
+            if (this.name === name) {
                 this.sortState = SortState.None;
+            }
         });
      }
 
-    ngOnInit() { 
-        this.name = this.elementRef.nativeElement.getAttribute("sort");
+    public ngOnInit() {
+        this.name = this.elementRef.nativeElement.getAttribute('sort');
     }
 
-    toggleSortState() {
-        this.sortState = <SortState>(this.sortState + 1)%3;
+    public toggleSortState() {
+        this.sortState = ((this.sortState + 1) % 3) as SortState;
     }
 
-    onSortClick($event) {
+    public onSortClick($event) {
         this.toggleSortState();
         switch (this.sortState) {
             case SortState.Ascending:
@@ -60,7 +61,6 @@ export class SortComponent implements OnInit {
             case SortState.None:
                this.sortService.clear(this.name);
                break;
-                
         }
     }
 
