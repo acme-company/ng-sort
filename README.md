@@ -8,7 +8,7 @@
 
 https://acme-company.github.io/ng-sort/
 
-Note: For multi-column-support, hold down <ctrl> key while clicking the header.
+Note: For multi-column sort, hold down <ctrl> key while clicking the table header.
 
 ## Installation
 
