@@ -5,53 +5,45 @@ import { Observable } from 'rxjs/Observable';
 export interface SortParameter {
     name: string;
     asc: boolean;
+    priority: number;
 }
 
 @Injectable()
 export class SortService {
-    public onClear$: Observable<string>;
     private shouldSort: boolean;
     private parameters: SortParameter[];
-    private clearEvent: Subject<string>;
     constructor() {
         this.shouldSort = false;
         this.parameters = [];
-        this.clearEvent = new Subject<string>();
-        this.onClear$ = this.clearEvent.asObservable();
     }
-    public orderBy(parameter: SortParameter, preserve: boolean) {
-        const parm = this.parameters.find((t) => t.name === parameter.name);
+    public register(name:string) : SortParameter {
+        let parm = this.parameters.find((t) => t.name === name);
         if (!parm) {
-            this.parameters.push(parameter);
-        } else {
-            parm.asc = parameter.asc;
-        }
+            parm = { name: name, asc: undefined, priority: undefined};
+            this.parameters.push(parm);
+        } 
+        return parm;
+        
+    }
 
-
-        if (!preserve) {
-            this.clearEvent.next(parameter.name);
-            this.parameters
-                .filter((t) => t !== (parm || parameter))
-                .forEach((t) => this.clear(t.name, true));
-        }
+    public clear() {
+     
+        this.parameters.forEach((t) => {
+            t.asc = undefined;
+            t.priority = undefined;
+        });
         this.shouldSort = true;
     }
 
-    public clear(name: string, preserve: boolean) {
-        const parmIndex = this.parameters.findIndex((t) => t.name === name);
-        if (parmIndex >= 0) {
-            const parm = this.parameters.splice(parmIndex, 1);
-           
+    public update (name: string, asc: boolean) {
+        let parm = this.parameters.find((t) => t.name === name);
+        if (parm.asc === undefined) {
+            parm.priority = this.parameters.map(t=>t.priority || 0).reduce((p, c)=> c > p ? c : p, 0) + 1;
         }
-
-        if (!preserve) {
-             this.parameters
-                 .filter((t) => parmIndex < 0 || t !== this.parameters[parmIndex])
-                 .forEach((t) => this.clear(t.name, true));
-             this.clearEvent.next(name);
+        if (asc === undefined) {
+            parm.priority = undefined;
         }
-
-
+        parm.asc = asc;
         this.shouldSort = true;
     }
 
@@ -61,9 +53,14 @@ export class SortService {
         }
 
         this.shouldSort = false;
+        let parameters = this.parameters.filter((t) => t.priority !== undefined).sort((a,b)=> {
+            if (a.priority < b.priority) return -1;
+            if (a.priority > b.priority) return 1;
+            return 0;
+        });
         return array.sort((a, b) => {
             let result = 0;
-            this.parameters.forEach((parm) => {
+            parameters.forEach((parm) => {
                 if (result === 0) {
                     const factor = parm.asc ? 1 : -1;
                     const aa = a[parm.name];

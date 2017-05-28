@@ -1,12 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { SortService } from './sort.service';
+import { SortService, SortParameter } from './sort.service';
 
-export enum SortState {
-    None = 0,
-    Ascending = 1,
-    Descending = 2
-
-}
 
 @Component({
     selector: '[sort]',
@@ -29,39 +23,35 @@ export enum SortState {
     ]
 })
 export class SortComponent implements OnInit {
-    public sortState: SortState;
-    public name: string;
+    public sortParameter: SortParameter;
 
     constructor(private sortService: SortService, private elementRef: ElementRef) {
-        this.sortState = SortState.None;
-        this.sortService.onClear$.subscribe((name: string) => {
-            if (this.name !== name) {
-                this.sortState = SortState.None;
-            }
-        });
      }
 
     public ngOnInit() {
-        this.name = this.elementRef.nativeElement.getAttribute('sort');
-    }
-
-    public toggleSortState() {
-        this.sortState = ((this.sortState + 1) % 3) as SortState;
+        const name = this.elementRef.nativeElement.getAttribute('sort');
+        this.sortParameter = this.sortService.register(name);
     }
 
     public onSortClick($event) {
-        this.toggleSortState();
-        switch (this.sortState) {
-            case SortState.Ascending:
-               this.sortService.orderBy({ name: this.name, asc: true}, $event.ctrlKey);
-               break;
-            case SortState.Descending:
-               this.sortService.orderBy({ name: this.name, asc: false}, $event.ctrlKey);
-               break;
-            case SortState.None:
-               this.sortService.clear(this.name, $event.ctrlKey);
-               break;
+        let nextSort = this.nextSort(this.sortParameter.asc);
+        if (!$event.ctrlKey) {
+            this.sortService.clear();
         }
+        this.sortService.update(this.sortParameter.name, nextSort);
+    }
+
+    private nextSort(current:boolean):boolean {
+        if (current === undefined) {
+            return true;
+        }
+        else if (current === true) {
+            return false;
+        }
+        else {
+            return undefined;
+        }
+        
     }
 
 }
