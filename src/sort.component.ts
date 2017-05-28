@@ -59,7 +59,7 @@ export class SortComponent implements OnInit {
                this.sortService.orderBy({ name: this.name, asc: false}, $event.ctrlKey);
                break;
             case SortState.None:
-               this.sortService.clear(this.name);
+               this.sortService.clear(this.name, $event.ctrlKey);
                break;
         }
     }

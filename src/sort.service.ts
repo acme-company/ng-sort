@@ -30,17 +30,25 @@ export class SortService {
         if (!preserve) {
             this.parameters
                 .filter((t) => t !== (parm || parameter))
-                .forEach((t) => this.clear(t.name));
+                .forEach((t) => this.clear(t.name, true));
         }
         this.shouldSort = true;
     }
 
-    public clear(name: string) {
+    public clear(name: string, preserve: boolean) {
         const parmIndex = this.parameters.findIndex((t) => t.name === name);
         if (parmIndex >= 0) {
             const parm = this.parameters.splice(parmIndex, 1);
             this.clearEvent.next(parm[0].name);
         }
+
+        if (!preserve) {
+            this.parameters
+                .filter((t) => parmIndex < 0 || t !== this.parameters[parmIndex])
+                .forEach((t) => this.clear(t.name, true));
+        }
+
+
         this.shouldSort = true;
     }
 
