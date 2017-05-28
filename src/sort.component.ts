@@ -35,7 +35,7 @@ export class SortComponent implements OnInit {
     constructor(private sortService: SortService, private elementRef: ElementRef) {
         this.sortState = SortState.None;
         this.sortService.onClear$.subscribe((name: string) => {
-            if (this.name === name) {
+            if (this.name !== name) {
                 this.sortState = SortState.None;
             }
         });

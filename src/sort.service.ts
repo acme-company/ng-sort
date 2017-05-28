@@ -27,7 +27,9 @@ export class SortService {
             parm.asc = parameter.asc;
         }
 
+
         if (!preserve) {
+            this.clearEvent.next(parameter.name);
             this.parameters
                 .filter((t) => t !== (parm || parameter))
                 .forEach((t) => this.clear(t.name, true));
@@ -39,13 +41,14 @@ export class SortService {
         const parmIndex = this.parameters.findIndex((t) => t.name === name);
         if (parmIndex >= 0) {
             const parm = this.parameters.splice(parmIndex, 1);
-            this.clearEvent.next(parm[0].name);
+           
         }
 
         if (!preserve) {
-            this.parameters
-                .filter((t) => parmIndex < 0 || t !== this.parameters[parmIndex])
-                .forEach((t) => this.clear(t.name, true));
+             this.parameters
+                 .filter((t) => parmIndex < 0 || t !== this.parameters[parmIndex])
+                 .forEach((t) => this.clear(t.name, true));
+             this.clearEvent.next(name);
         }
 
 
