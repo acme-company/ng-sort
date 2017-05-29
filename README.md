@@ -100,5 +100,48 @@ export class AppComponent {
 }
 
 ```
+Customizing sort icons
+
+```typescript
+    sortService.configure({
+        noneClass: 'glyphicon-sort',
+        ascendingClass: 'glyphicon-triangle-top',
+        descendingClass: 'glyphicon-triangle-bottom'
+    });
+```
+```css
+/* include in index.html */
+
+@font-face {
+    font-family: 'Glyphicons Halflings';
+
+    src: url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.eot');
+    src: url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.woff') format('woff'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.glyphicon-sort:before {
+    content: "\e150";
+}
+
+.glyphicon-triangle-bottom:before {
+    content: "\e252";
+}
+
+.glyphicon-triangle-top:before {
+    content: "\e253";
+}
 
 
+```
