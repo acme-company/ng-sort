@@ -36,7 +36,7 @@ export class AppModule {
 }
 ```
 
-App.Component.html
+###App.Component.html
 ```html
   <table class="table table-hover">
       <thead>
@@ -62,7 +62,7 @@ App.Component.html
       </tfoot>
   </table>
 ```
-App.Component.ts
+###App.Component.ts
 ```typescript
 import { Component } from '@angular/core';
 import { SortService } from 'ng-sort';
@@ -96,18 +96,17 @@ export class AppComponent {
       { firstName: 'Barry', lastName: 'White', birthDate: new Date(2009, 3, 19) },
     ];
   }
-
 }
 
 ```
-Customizing sort icons
+###Customizing Sort Icons
 
 ```typescript
-    sortService.configure({
-        noneClass: 'glyphicon-sort',
-        ascendingClass: 'glyphicon-triangle-top',
-        descendingClass: 'glyphicon-triangle-bottom'
-    });
+sortService.configure({
+    noneClass: 'glyphicon-sort',
+    ascendingClass: 'glyphicon-triangle-top',
+    descendingClass: 'glyphicon-triangle-bottom'
+});
 ```
 ```css
 /* include in index.html */
