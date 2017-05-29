@@ -16,7 +16,7 @@ Note: For multi-column sort, hold down CTRL key while clicking the table header.
 npm install ng-sort --save
 ```
 
-## Usage example
+# Usage
 
 ## App.Module.ts
 ```typescript
