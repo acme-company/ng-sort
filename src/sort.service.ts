@@ -8,26 +8,34 @@ export interface SortParameter {
     priority: number;
 }
 
+export interface Options {
+    noneClass: string;
+    ascendingClass: string;
+    descendingClass: string;
+}
+
 @Injectable()
 export class SortService {
+    public options: Options;
     private shouldSort: boolean;
     private parameters: SortParameter[];
     constructor() {
         this.shouldSort = false;
         this.parameters = [];
     }
-    public register(name:string) : SortParameter {
+    public configure(options: Options) {
+        this.options = options;
+    }
+    public register(name: string): SortParameter {
         let parm = this.parameters.find((t) => t.name === name);
         if (!parm) {
-            parm = { name: name, asc: undefined, priority: undefined};
+            parm = { name, asc: undefined, priority: undefined};
             this.parameters.push(parm);
-        } 
+        }
         return parm;
-        
     }
 
     public clear() {
-     
         this.parameters.forEach((t) => {
             t.asc = undefined;
             t.priority = undefined;
@@ -35,10 +43,11 @@ export class SortService {
         this.shouldSort = true;
     }
 
-    public update (name: string, asc: boolean) {
-        let parm = this.parameters.find((t) => t.name === name);
+    public update(name: string, asc: boolean) {
+        const parm = this.parameters.find((t) => t.name === name);
         if (parm.asc === undefined) {
-            parm.priority = this.parameters.map(t=>t.priority || 0).reduce((p, c)=> c > p ? c : p, 0) + 1;
+            parm.priority = this.parameters.map((t) =>
+                t.priority || 0).reduce((p, c) => c > p ? c : p, 0) + 1;
         }
         if (asc === undefined) {
             parm.priority = undefined;
@@ -53,9 +62,14 @@ export class SortService {
         }
 
         this.shouldSort = false;
-        let parameters = this.parameters.filter((t) => t.priority !== undefined).sort((a,b)=> {
-            if (a.priority < b.priority) return -1;
-            if (a.priority > b.priority) return 1;
+        const parameters = this.parameters.filter((t) => t.priority !== undefined)
+        .sort((a, b) => {
+            if (a.priority < b.priority) {
+                return -1;
+            }
+            if (a.priority > b.priority) {
+                return 1;
+            }
             return 0;
         });
         return array.sort((a, b) => {

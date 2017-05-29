@@ -1,4 +1,4 @@
 <span class="unselectable" (click)="onSortClick($event)">
     <ng-content></ng-content>
-    <span class="glyphicon"  [ngClass]="{ 'glyphicon-sort': sortParameter.asc === undefined, 'glyphicon-triangle-top': sortParameter.asc === true, 'glyphicon-triangle-bottom': sortParameter.asc === false }"></span>    
+    <span class="glyphicon"  [ngClass]="sortClass"></span>
 </span>

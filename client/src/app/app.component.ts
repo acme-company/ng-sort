@@ -15,7 +15,12 @@ export interface Person {
 export class AppComponent {
   name = 'Angular';
   people: Person[] = [];
-  constructor() {
+  constructor(sortService: SortService) {
+    sortService.configure({
+        noneClass: 'glyphicon-sort',
+        ascendingClass: 'glyphicon-triangle-top',
+        descendingClass: 'glyphicon-triangle-bottom'
+    });
     this.people = [
       { firstName: 'James', lastName: 'Dean', birthDate: new Date(2012, 5, 1) },
       { firstName: 'John', lastName: 'Smith', birthDate: new Date(2012, 5, 1) },
