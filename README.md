@@ -113,7 +113,7 @@ sortService.configure({
 });
 ```
 ```css
-/* include in index.html */
+/* include in CSS from index.html */
 
 @font-face {
     font-family: 'Glyphicons Halflings';
