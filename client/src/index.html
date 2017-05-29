@@ -7,7 +7,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <style>
+    @font-face {
+      font-family: 'Glyphicons Halflings';
 
+      src: url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.eot');
+      src: url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.woff') format('woff'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+    }
+
+    .glyphicon {
+      position: relative;
+      top: 1px;
+      display: inline-block;
+      font-family: 'Glyphicons Halflings';
+      font-style: normal;
+      font-weight: normal;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .glyphicon-sort:before {
+      content: "\e150";
+      opacity: .25;
+   
+    }
+
+    .glyphicon-triangle-bottom:before {
+      content: "\e252";
+    }
+
+    .glyphicon-triangle-top:before {
+      content: "\e253";
+    }
+
+    td span {
+      -moz-user-select: -moz-none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+
+      /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+      -ms-user-select: none;
+      user-select: none;
+    }
+  </style>
   </head>
 
   <body>
