@@ -12,6 +12,7 @@
  * Entry point for all public APIs of the core package.
  */
 export * from './src/app.module';
+export { SortService } from './src/sort.service';
 
 // This file only reexports content of the `src` folder. Keep it that way.
 
