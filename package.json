@@ -1,6 +1,6 @@
 {
   "name": "ng-sort",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "",
   "main": "dist/ng-sort.es5.js",
   "typings": "dist/index.d.ts",
