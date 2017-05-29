@@ -18,7 +18,7 @@ npm install ng-sort --save
 
 ## Usage example
 
-App.Module.ts
+## App.Module.ts
 ```typescript
 import { NgModule } from "@angular/core";
 ...
@@ -36,7 +36,7 @@ export class AppModule {
 }
 ```
 
-###App.Component.html
+## App.Component.html
 ```html
   <table class="table table-hover">
       <thead>
@@ -62,7 +62,7 @@ export class AppModule {
       </tfoot>
   </table>
 ```
-###App.Component.ts
+## App.Component.ts
 ```typescript
 import { Component } from '@angular/core';
 import { SortService } from 'ng-sort';
@@ -99,7 +99,7 @@ export class AppComponent {
 }
 
 ```
-###Customizing Sort Icons
+## Customizing Sort Icons
 
 ```typescript
 sortService.configure({
