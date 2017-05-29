@@ -65,6 +65,8 @@ export class AppModule {
   </table>
 ```
 ## App.Component.ts
+Add the SortService to the providers array for each of your list components.  The scope of SortService should not be global because it tracks sort state for a single list.
+
 ```typescript
 import { Component } from '@angular/core';
 import { SortService } from 'ng-sort';
@@ -148,5 +150,18 @@ sortService.configure({
     content: "\e253";
 }
 
+/* when the header is clicked, do not allow select */
+td[sort] {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
+  /*
+ Introduced in IE 10.
+ See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+*/
+  -ms-user-select: none;
+  user-select: none;
+}
 
 ```
