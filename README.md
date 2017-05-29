@@ -117,7 +117,11 @@ sortService.configure({
     font-family: 'Glyphicons Halflings';
 
     src: url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.eot');
-    src: url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.woff') format('woff'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+    src: url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), 
+    url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.woff2') format('woff2'), 
+    url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.woff') format('woff'), 
+    url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.ttf') format('truetype'), 
+    url('http://getbootstrap.com/dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 
 .glyphicon {
