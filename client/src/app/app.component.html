@@ -1,3 +1,6 @@
+{{sortService.sorting }}
+<!--{{sortService.internal | json}}-->
+<input type="text" [value]="name" (input)="name = $event.target.value" /> {{ name }}
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
@@ -17,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let person of people | sort">
+                    <tr *ngFor="let person of people |  sort | slice:0:10 ">
                         <td>{{ person.firstName }}</td>
                         <td>{{ person.lastName }}</td>
                         <td>{{ person.birthDate | date:'yyyy-MM-dd' }}</td>
@@ -35,3 +38,4 @@
     </div>
     <div class="col-md-4"></div>
 </div>
+

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { ChangeDetector } from './changeDetector';
 
 export interface SortParameter {
     name: string;
@@ -17,11 +18,14 @@ export interface Options {
 @Injectable()
 export class SortService {
     public options: Options;
-    private shouldSort: boolean;
+    private internal: any[];
+    private copy: any[];
     private parameters: SortParameter[];
+    private sorting: number = 0;
+    private shouldSort: boolean;
     constructor() {
-        this.shouldSort = false;
         this.parameters = [];
+        this.shouldSort = false;
     }
     public configure(options: Options) {
         this.options = options;
@@ -41,6 +45,7 @@ export class SortService {
             t.priority = undefined;
         });
         this.shouldSort = true;
+
     }
 
     public update(name: string, asc: boolean) {
@@ -58,36 +63,30 @@ export class SortService {
 
     public sort(array: any[]): any[] {
         if (!this.shouldSort) {
-            return array;
+            if (!ChangeDetector.referenceChanged(this.internal, array) 
+            && !ChangeDetector.propertyChanged(this.copy, array)){  
+          
+                return array;
+            }
         }
-
-        this.shouldSort = false;
+        
+        ++this.sorting;
         const parameters = this.parameters.filter((t) => t.priority !== undefined)
-        .sort((a, b) => {
-            if (a.priority < b.priority) {
-                return -1;
-            }
-            if (a.priority > b.priority) {
-                return 1;
-            }
-            return 0;
-        });
-        return array.sort((a, b) => {
+        .sort((a, b) =>  a.priority == b.priority ? 0 : (a.priority < b.priority ? -1:1));
+        
+        var array = array.sort((a, b) => {
             let result = 0;
-            parameters.forEach((parm) => {
-                if (result === 0) {
-                    const factor = parm.asc ? 1 : -1;
-                    const aa = a[parm.name];
-                    const bb = b[parm.name];
-                    if (aa < bb) {
-                        result = -1 * factor;
-                    }
-                    if (aa > bb) {
-                        result = 1 * factor;
-                    }
-                }
-            });
+            for (var i = 0, parm = parameters[i]; i < parameters.length && result == 0; ++i) {
+                var aa = a[parm.name];
+                var bb = b[parm.name];
+                result = (aa == bb) ? 0 : (aa<bb? -1:1) * (parm.asc ? 1: -1);
+            }
             return result;
         });
+        this.internal = array;
+        this.copy = array.slice();
+        this.shouldSort = false;
+        return this.internal;
     }
+
 }
